@@ -35,6 +35,6 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add amul_stock_state.json
+          git add -f amul_stock_state.json
           git diff --staged --quiet || git commit -m "chore: update stock state"
           git push
