@@ -320,30 +320,15 @@ def check_stock():
 
         if prev is None:
             label = "IN STOCK" if available else "OUT OF STOCK"
-            print(f"  [NEW]     {name} - {label}")
+            print(f"  [NEW]     {name} - {label} (tracking started, no notification)")
+        elif prev["available"] != available and available:
+            print(f"  [RESTOCK] {name} is BACK IN STOCK!")
             _notify(
-                title       = f"Amul Tracker: {name}",
-                body        = f"Now tracking '{name}'. Current status: {label}.",
-                ntfy_priority = "low",
-                ntfy_tags   = "white_check_mark",
+                title       = f"RESTOCK: {name}",
+                body        = f"'{name}' is back in stock on Amul Shop! Order now.",
+                ntfy_priority = "urgent",
+                ntfy_tags   = "package,tada",
             )
-        elif prev["available"] != available:
-            if available:
-                print(f"  [RESTOCK] {name} is BACK IN STOCK!")
-                _notify(
-                    title       = f"RESTOCK: {name}",
-                    body        = f"'{name}' is back in stock on Amul Shop! Order now.",
-                    ntfy_priority = "urgent",
-                    ntfy_tags   = "package,tada",
-                )
-            else:
-                print(f"  [OOS]     {name} went OUT OF STOCK")
-                _notify(
-                    title       = f"Out of Stock: {name}",
-                    body        = f"'{name}' is now out of stock on Amul Shop.",
-                    ntfy_priority = "default",
-                    ntfy_tags   = "x",
-                )
         else:
             label = "in stock" if available else "out of stock"
             print(f"  [OK]      {name} - {label} (no change)")
